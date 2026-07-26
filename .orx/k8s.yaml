@@ -14,13 +14,13 @@ spec:
           command: ["bash", "-c", "eval \"$ORX_SCRIPT\""]
           resources:
             requests:
-              nvidia.com/gpu: "4"
-              cpu: "32"
-              memory: "180Gi"
+              nvidia.com/gpu: "1"
+              cpu: "8"
+              memory: "60Gi"
             limits:
-              nvidia.com/gpu: "4"
-              cpu: "32"
-              memory: "180Gi"
+              nvidia.com/gpu: "1"
+              cpu: "8"
+              memory: "60Gi"
           env:
             - name: HF_HOME
               value: /workspace/hf-cache
@@ -35,7 +35,7 @@ spec:
         - name: dshm
           emptyDir:
             medium: Memory
-            sizeLimit: 64Gi
+            sizeLimit: 16Gi
         - name: cache
           emptyDir:
-            sizeLimit: 80Gi
+            sizeLimit: 40Gi

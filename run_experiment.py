@@ -44,9 +44,13 @@ def rank0_print(obj: Any) -> None:
 
 
 def setup_dist(seed: int) -> tuple[int, int, torch.device]:
-    dist.init_process_group("nccl")
-    rank, world = dist.get_rank(), dist.get_world_size()
-    local_rank = int(os.environ["LOCAL_RANK"])
+    world = int(os.environ.get("WORLD_SIZE", "1"))
+    if world > 1:
+        dist.init_process_group("nccl")
+        rank = dist.get_rank()
+        local_rank = int(os.environ["LOCAL_RANK"])
+    else:
+        rank, local_rank = 0, 0
     torch.cuda.set_device(local_rank)
     seed_i = seed + rank
     random.seed(seed_i)
@@ -195,9 +199,12 @@ def evaluate(model, processor, rows, cfg, rank, world, device, benchmark, stage)
             suffix, skip_special_tokens=True, clean_up_tokenization_spaces=False
         )[0]
         local.append((row["id"], pred, score_prediction(pred, row)))
-    gathered = [None for _ in range(world)]
-    dist.all_gather_object(gathered, local)
-    flat = [x for part in gathered for x in part]
+    if dist.is_initialized():
+        gathered = [None for _ in range(world)]
+        dist.all_gather_object(gathered, local)
+        flat = [x for part in gathered for x in part]
+    else:
+        flat = local
     flat.sort(key=lambda x: x[0])
     correct = sum(x[2] for x in flat)
     result = {
@@ -243,9 +250,12 @@ def token_diagnostic(model, teacher, processor, rows, cfg, rank, world, device, 
                 "max_abs_contrast": float(delta.abs().max()),
                 "plausible_support_size": int(plausible.sum()),
             })
-    gathered = [None for _ in range(world)]
-    dist.all_gather_object(gathered, values)
-    all_values = [x for part in gathered for x in part]
+    if dist.is_initialized():
+        gathered = [None for _ in range(world)]
+        dist.all_gather_object(gathered, values)
+        all_values = [x for part in gathered for x in part]
+    else:
+        all_values = values
     result = {"event": "token_diagnostic", "stage": stage, "n": len(all_values)}
     for key in all_values[0]:
         result[key] = float(np.mean([x[key] for x in all_values]))
@@ -264,7 +274,7 @@ def ema_update(teacher, student, rate):
 
 
 def train(model, teacher, processor, rows, cfg, rank, world, device):
-    module = model.module
+    module = model.module if isinstance(model, DDP) else model
     optimizer = torch.optim.AdamW(
         module.parameters(), lr=cfg["learning_rate"], weight_decay=0.0
     )
@@ -371,8 +381,9 @@ def train(model, teacher, processor, rows, cfg, rank, world, device):
             float(delta.abs().max()),
             float(torch.isfinite(loss).all()),
         ], device=device)
-        dist.all_reduce(metrics, op=dist.ReduceOp.SUM)
-        metrics /= world
+        if dist.is_initialized():
+            dist.all_reduce(metrics, op=dist.ReduceOp.SUM)
+            metrics /= world
         event = {
             "event": "train_step",
             "step": step + 1,
@@ -424,7 +435,8 @@ def main():
     ).to(device)
     model.config.use_cache = False
     model.gradient_checkpointing_enable()
-    model = DDP(model, device_ids=[device.index], find_unused_parameters=True)
+    if world > 1:
+        model = DDP(model, device_ids=[device.index], find_unused_parameters=True)
     # Large pickled image objects are deliberately not sent through NCCL.
     # Every rank resolves the same public files through the pod-local HF cache
     # and applies the same deterministic selection.
@@ -435,7 +447,8 @@ def main():
     mathvista = fixed_eval_rows(
         "MathVista", cfg["eval_examples_per_benchmark"], cfg["seed"]
     )
-    dist.barrier()
+    if dist.is_initialized():
+        dist.barrier()
     rank0_print({
         "event": "data",
         "train_ids_sha_material": [x["id"] for x in train_rows],
@@ -452,7 +465,8 @@ def main():
     teacher = None
     history = []
     if cfg["condition"] != "base":
-        teacher = copy.deepcopy(model.module).to(device)
+        source_model = model.module if isinstance(model, DDP) else model
+        teacher = copy.deepcopy(source_model).to(device)
         teacher.requires_grad_(False)
         history = train(
             model, teacher, processor, train_rows, cfg, rank, world, device
@@ -487,8 +501,9 @@ def main():
             "finite_all_steps": all(x["finite_fraction"] == 1.0 for x in history),
         }
         print("FINAL_RESULT_JSON=" + json.dumps(summary, sort_keys=True), flush=True)
-    dist.barrier()
-    dist.destroy_process_group()
+    if dist.is_initialized():
+        dist.barrier()
+        dist.destroy_process_group()
 
 
 if __name__ == "__main__":
