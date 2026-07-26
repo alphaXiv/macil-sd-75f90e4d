@@ -179,14 +179,10 @@ def _(mo):
         ## Scope and provenance
 
         - **Model:** public `Qwen/Qwen3-VL-2B-Instruct`
-        - **Training:** 48 fixed public ViRL39K examples; batch one; one rollout;
-          12 or 36 updates
+        - **Training:** 48 fixed public ViRL39K examples; batch one; one rollout; 12 or 36 updates
         - **Evaluation:** 64 fixed MMStar and 64 fixed MathVista items
-        - **Compute:** Kubernetes; NVIDIA RTX PRO 6000 Blackwell Server Edition;
-          16 GPUs peak; 50m10s (0.84 h) experiment-campaign wall time
-        - **Largest substitutions:** no official VCSD code, 32-token evaluation
-          cap, strict local answer extraction, and two small benchmarks instead
-          of seven full benchmarks
+        - **Compute:** Kubernetes; NVIDIA RTX PRO 6000 Blackwell Server Edition; 16 GPUs peak; 50m10s (0.84 h) experiment-campaign wall time
+        - **Largest substitutions:** no official VCSD code, 32-token evaluation cap, strict local answer extraction, and two small benchmarks instead of seven full benchmarks
 
         The paper’s much higher full-benchmark scores are not directly comparable
         to these subset numbers. A full reproduction still needs the complete
