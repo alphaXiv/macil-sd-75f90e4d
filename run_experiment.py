@@ -250,12 +250,35 @@ def token_diagnostic(model, teacher, processor, rows, cfg, rank, world, device, 
             scores = po + delta
             scores = scores.masked_fill(~plausible, -torch.inf)
             q = torch.softmax(scores, -1)
+            answer_token_ids = set()
+            answer_text = str(row["answer"])
+            for variant in (answer_text, " " + answer_text):
+                ids = processor.tokenizer.encode(
+                    variant, add_special_tokens=False
+                )
+                if ids:
+                    answer_token_ids.add(ids[0])
+            answer_index = torch.tensor(
+                sorted(answer_token_ids), device=device, dtype=torch.long
+            )
+            answer_original = p[0, answer_index].sum()
+            answer_control = pc.exp()[0, answer_index].sum()
+            answer_shaped = q[0, answer_index].sum()
             values.append({
                 "positive_contrast_mass_original": float((p * positive).sum()),
                 "positive_contrast_mass_shaped": float((q * positive).sum()),
                 "mean_abs_contrast": float(delta.abs().mean()),
                 "max_abs_contrast": float(delta.abs().max()),
                 "plausible_support_size": int(plausible.sum()),
+                "answer_token_count": int(answer_index.numel()),
+                "answer_mass_original": float(answer_original),
+                "answer_mass_control": float(answer_control),
+                "answer_mass_shaped": float(answer_shaped),
+                "answer_shaping_gain": float(answer_shaped - answer_original),
+                "answer_image_contrast": float(answer_original - answer_control),
+                "answer_in_plausible_support": float(
+                    plausible[0, answer_index].any()
+                ),
             })
     if dist.is_initialized():
         gathered = [None for _ in range(world)]
