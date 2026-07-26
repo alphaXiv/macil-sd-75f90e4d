@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="480" viewBox="0 0 900 480">
+  <rect width="900" height="480" rx="20" fill="#f7f8fb"/>
+  <text x="54" y="55" font-family="Inter,Arial" font-size="25" font-weight="700" fill="#172033">36-step held-out mean change</text>
+  <text x="54" y="84" font-family="Inter,Arial" font-size="15" fill="#647087">percentage points vs the unchanged checkpoint · four seeds</text>
+  <line x1="500" y1="120" x2="500" y2="422" stroke="#26344f" stroke-width="2"/>
+  <g font-family="Inter,Arial" font-size="17" fill="#253047">
+    <text x="200" y="157" text-anchor="end">OPSD</text><text x="200" y="227" text-anchor="end">VCSD (β=.1)</text><text x="200" y="297" text-anchor="end">No contrast (α=0)</text><text x="200" y="367" text-anchor="end">No support (β=0)</text>
+  </g>
+  <rect x="500" y="132" width="191" height="34" rx="7" fill="#3478f6"/>
+  <rect x="357" y="202" width="143" height="34" rx="7" fill="#ef6c5b"/>
+  <rect x="405" y="272" width="95" height="34" rx="7" fill="#8d78d6"/>
+  <rect x="237" y="342" width="263" height="34" rx="7" fill="#d74c65"/>
+  <g font-family="Inter,Arial" font-size="17" font-weight="700">
+    <text x="703" y="156" fill="#2462cf">+1.56</text>
+    <text x="306" y="226" fill="#b44538">−1.17</text>
+    <text x="354" y="296" fill="#6855ad">−0.78</text>
+    <text x="251" y="366" fill="#ffffff">−2.15</text>
+  </g>
+  <g font-family="Inter,Arial" font-size="13" fill="#7a8498">
+    <text x="234" y="442">−2.2</text><text x="354" y="442">−1.2</text><text x="493" y="442">0</text><text x="613" y="442">+1</text>
+  </g>
+</svg>

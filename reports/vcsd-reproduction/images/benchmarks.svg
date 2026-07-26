@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="480" viewBox="0 0 900 480">
+  <rect width="900" height="480" rx="20" fill="#f7f8fb"/>
+  <text x="54" y="55" font-family="Inter,Arial" font-size="25" font-weight="700" fill="#172033">Where the accuracy moved</text>
+  <text x="54" y="84" font-family="Inter,Arial" font-size="15" fill="#647087">mean accuracy (%) across four 36-step seeds</text>
+  <line x1="80" y1="390" x2="820" y2="390" stroke="#9ba5b8"/>
+  <g font-family="Inter,Arial" font-size="14" fill="#5d687d">
+    <text x="122" y="420">Base</text><text x="272" y="420">OPSD</text><text x="422" y="420">VCSD</text><text x="572" y="420">α=0</text><text x="722" y="420">β=0</text>
+  </g>
+  <g fill="#3478f6">
+    <rect x="100" y="155" width="38" height="235"/><rect x="250" y="158" width="38" height="232"/><rect x="400" y="161" width="38" height="229"/><rect x="550" y="167" width="38" height="223"/><rect x="700" y="176" width="38" height="214"/>
+  </g>
+  <g fill="#f29b38">
+    <rect x="142" y="191" width="38" height="199"/><rect x="292" y="164" width="38" height="226"/><rect x="442" y="203" width="38" height="187"/><rect x="592" y="191" width="38" height="199"/><rect x="742" y="203" width="38" height="187"/>
+  </g>
+  <g font-family="Inter,Arial" font-size="13" font-weight="700" fill="#29354b">
+    <text x="96" y="146">31.25</text><text x="138" y="182">26.56</text>
+    <text x="246" y="149">30.86</text><text x="288" y="155">30.08</text>
+    <text x="396" y="152">30.47</text><text x="438" y="194">25.00</text>
+    <text x="546" y="158">29.69</text><text x="588" y="182">26.56</text>
+    <text x="696" y="167">28.52</text><text x="738" y="194">25.00</text>
+  </g>
+  <circle cx="650" cy="60" r="7" fill="#3478f6"/><text x="664" y="65" font-family="Inter,Arial" font-size="14" fill="#47536a">MMStar</text>
+  <circle cx="755" cy="60" r="7" fill="#f29b38"/><text x="769" y="65" font-family="Inter,Arial" font-size="14" fill="#47536a">MathVista</text>
+</svg>

@@ -1,0 +1,37 @@
+{
+  "paper_id": "2607.21556",
+  "baseline": {"MMStar": 31.25, "MathVista": 26.5625, "mean": 28.90625},
+  "mean_delta_12_steps": {
+    "OPSD": 0.46875,
+    "VCSD": -0.46875,
+    "Beta0": -1.09375
+  },
+  "mean_delta_36_steps": {
+    "OPSD": 1.5625,
+    "VCSD": -1.171875,
+    "Alpha0": -0.78125,
+    "Beta0": -2.1484375
+  },
+  "answer_token_diagnostic": {
+    "black_image_mass": 0.01463581994676133,
+    "original_image_mass": 0.11979723386320984,
+    "contrast_shaped_mass": 0.2983541348949075,
+    "shaping_gain": 0.17855690266151214,
+    "answer_in_plausible_support": 0.4375
+  },
+  "training_dynamics_36_steps": {
+    "OPSD": {"mean_grad_norm": 123.4201, "max_grad_norm": 478.0, "max_loss": 1.8902, "mean_support_size": 151936.0},
+    "VCSD": {"mean_grad_norm": 135.8841, "max_grad_norm": 876.0, "max_loss": 1.4541, "mean_support_size": 1.9505},
+    "Alpha0": {"mean_grad_norm": 45.6884, "max_grad_norm": 182.0, "max_loss": 0.7166, "mean_support_size": 1.9117},
+    "Beta0": {"mean_grad_norm": 146.7270, "max_grad_norm": 660.0, "max_loss": 3.5437, "mean_support_size": 151936.0}
+  },
+  "compute": {
+    "backend": "kubernetes",
+    "gpu_model": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "peak_concurrent_gpu_count": 16,
+    "wall_hours": 0.84,
+    "wall_time": "50m10s",
+    "first_job_utc": "2026-07-26T02:56:46Z",
+    "last_job_utc": "2026-07-26T03:46:56Z"
+  }
+}

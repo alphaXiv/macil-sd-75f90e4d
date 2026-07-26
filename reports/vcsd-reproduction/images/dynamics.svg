@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="480" viewBox="0 0 900 480">
+  <rect width="900" height="480" rx="20" fill="#f7f8fb"/>
+  <text x="54" y="55" font-family="Inter,Arial" font-size="25" font-weight="700" fill="#172033">Removing support raises optimization stress</text>
+  <text x="54" y="84" font-family="Inter,Arial" font-size="15" fill="#647087">aggregate over 144 updates per condition; loss and gradient scales are descriptive</text>
+  <text x="70" y="130" font-family="Inter,Arial" font-size="17" font-weight="700" fill="#344056">Mean gradient norm</text>
+  <g fill="#ef6c5b"><rect x="70" y="155" width="272" height="31" rx="6"/><rect x="70" y="205" width="294" height="31" rx="6"/></g>
+  <text x="78" y="177" font-family="Inter,Arial" font-size="14" fill="white">supported VCSD · 135.9</text>
+  <text x="78" y="227" font-family="Inter,Arial" font-size="14" fill="white">β=0 · 146.7</text>
+  <text x="70" y="285" font-family="Inter,Arial" font-size="17" font-weight="700" fill="#344056">Maximum observed forward-KL loss</text>
+  <rect x="70" y="310" width="145" height="31" rx="6" fill="#ef6c5b"/><rect x="70" y="360" width="354" height="31" rx="6" fill="#d74c65"/>
+  <text x="78" y="332" font-family="Inter,Arial" font-size="14" fill="white">supported · 1.45</text>
+  <text x="78" y="382" font-family="Inter,Arial" font-size="14" fill="white">β=0 · 3.54</text>
+  <rect x="510" y="135" width="330" height="250" rx="16" fill="#e9edf5"/>
+  <text x="540" y="180" font-family="Inter,Arial" font-size="18" font-weight="700" fill="#344056">Candidate tokens / position</text>
+  <text x="540" y="245" font-family="Inter,Arial" font-size="40" font-weight="700" fill="#ef6c5b">1.95</text>
+  <text x="540" y="272" font-family="Inter,Arial" font-size="15" fill="#59657b">supported VCSD</text>
+  <text x="540" y="335" font-family="Inter,Arial" font-size="40" font-weight="700" fill="#d74c65">151,936</text>
+  <text x="540" y="362" font-family="Inter,Arial" font-size="15" fill="#59657b">β=0 unrestricted</text>
+</svg>

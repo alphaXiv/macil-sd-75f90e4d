@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="480" viewBox="0 0 900 480">
+  <rect width="900" height="480" rx="20" fill="#f7f8fb"/>
+  <text x="54" y="55" font-family="Inter,Arial" font-size="25" font-weight="700" fill="#172033">The ordering held across sampling seeds</text>
+  <text x="54" y="84" font-family="Inter,Arial" font-size="15" fill="#647087">each dot is a 36-step run; vertical position is mean accuracy change</text>
+  <line x1="90" y1="230" x2="850" y2="230" stroke="#536078" stroke-width="2"/>
+  <g stroke="#d7dce5"><line x1="90" y1="130" x2="850" y2="130"/><line x1="90" y1="330" x2="850" y2="330"/><line x1="90" y1="390" x2="850" y2="390"/></g>
+  <g font-family="Inter,Arial" font-size="13" fill="#69758a"><text x="48" y="135">+2</text><text x="58" y="235">0</text><text x="48" y="335">−2</text><text x="48" y="395">−3</text></g>
+  <g fill="#3478f6"><circle cx="190" cy="113" r="9"/><circle cx="208" cy="152" r="9"/><circle cx="226" cy="152" r="9"/><circle cx="244" cy="191" r="9"/></g>
+  <g fill="#ef6c5b"><circle cx="380" cy="269" r="9"/><circle cx="398" cy="308" r="9"/><circle cx="416" cy="269" r="9"/><circle cx="434" cy="308" r="9"/></g>
+  <g fill="#8d78d6"><circle cx="570" cy="308" r="9"/><circle cx="588" cy="230" r="9"/><circle cx="606" cy="269" r="9"/><circle cx="624" cy="269" r="9"/></g>
+  <g fill="#d74c65"><circle cx="750" cy="386" r="9"/><circle cx="768" cy="308" r="9"/><circle cx="786" cy="347" r="9"/><circle cx="804" cy="308" r="9"/></g>
+  <g font-family="Inter,Arial" font-size="16" font-weight="700" fill="#344056"><text x="190" y="435">OPSD</text><text x="371" y="435">VCSD</text><text x="560" y="435">α=0</text><text x="750" y="435">β=0</text></g>
+</svg>

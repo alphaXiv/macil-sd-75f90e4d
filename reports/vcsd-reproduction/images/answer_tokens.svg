@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="480" viewBox="0 0 900 480">
+  <rect width="900" height="480" rx="20" fill="#f7f8fb"/>
+  <text x="54" y="55" font-family="Inter,Arial" font-size="25" font-weight="700" fill="#172033">Contrast targets the answer tokens</text>
+  <text x="54" y="84" font-family="Inter,Arial" font-size="15" fill="#647087">mean probability mass on ground-truth answer tokens · 16 MMStar examples</text>
+  <line x1="100" y1="390" x2="830" y2="390" stroke="#9ba5b8"/>
+  <rect x="165" y="374" width="135" height="16" rx="6" fill="#9da8ba"/>
+  <rect x="385" y="270" width="135" height="120" rx="6" fill="#3478f6"/>
+  <rect x="605" y="92" width="135" height="298" rx="6" fill="#28a67a"/>
+  <g font-family="Inter,Arial" font-size="22" font-weight="700" fill="#26324a">
+    <text x="194" y="360">1.46%</text><text x="414" y="255">11.98%</text><text x="634" y="77">29.84%</text>
+  </g>
+  <g font-family="Inter,Arial" font-size="16" fill="#465269">
+    <text x="180" y="425">black image</text><text x="398" y="425">original image</text><text x="602" y="425">contrast-shaped</text>
+  </g>
+  <path d="M520 210 C555 170,575 150,605 140" fill="none" stroke="#28a67a" stroke-width="3"/>
+  <text x="508" y="190" font-family="Inter,Arial" font-size="17" font-weight="700" fill="#238664">+17.86 points</text>
+</svg>
