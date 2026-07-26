@@ -326,7 +326,7 @@ def train(model, teacher, processor, rows, cfg, rank, world, device):
             teacher_prefix = original
         teacher_inputs = append_tokens(teacher_prefix, suffix)
         teacher.eval()
-        with torch.inference_mode(), precision_context():
+        with torch.no_grad(), precision_context():
             to = teacher(**teacher_inputs, use_cache=False).logits[:, -suffix.shape[1]-1:-1]
             logp_orig = torch.log_softmax(to.float() / cfg["temperature_kd"], -1)
             if condition in {"vcsd", "beta0"}:
