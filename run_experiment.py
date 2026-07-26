@@ -89,7 +89,7 @@ def append_tokens(inputs: dict[str, torch.Tensor], suffix: torch.Tensor):
     out = dict(inputs)
     out["input_ids"] = torch.cat([inputs["input_ids"], suffix], dim=1)
     out["attention_mask"] = torch.ones_like(out["input_ids"])
-    for type_key in ("token_type_ids", "input_token_type"):
+    for type_key in ("mm_token_type_ids", "token_type_ids", "input_token_type"):
         if type_key not in inputs:
             continue
         suffix_types = torch.zeros_like(suffix)
