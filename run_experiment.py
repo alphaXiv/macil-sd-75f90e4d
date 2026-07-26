@@ -89,6 +89,11 @@ def append_tokens(inputs: dict[str, torch.Tensor], suffix: torch.Tensor):
     out = dict(inputs)
     out["input_ids"] = torch.cat([inputs["input_ids"], suffix], dim=1)
     out["attention_mask"] = torch.ones_like(out["input_ids"])
+    if "token_type_ids" in inputs:
+        suffix_types = torch.zeros_like(suffix)
+        out["token_type_ids"] = torch.cat(
+            [inputs["token_type_ids"], suffix_types], dim=1
+        )
     return out
 
 
@@ -472,8 +477,20 @@ def main():
             model, teacher, processor, train_rows, cfg, rank, world, device
         )
     final = [
-        evaluate(model, processor, mmstar, cfg, rank, world, device, "after"),
-        evaluate(model, processor, mathvista, cfg, rank, world, device, "after"),
+        evaluate(
+            model, processor, mmstar, cfg, rank, world, device, "MMStar", "after"
+        ),
+        evaluate(
+            model,
+            processor,
+            mathvista,
+            cfg,
+            rank,
+            world,
+            device,
+            "MathVista",
+            "after",
+        ),
     ]
     diag_after = token_diagnostic(
         model, teacher, processor, mmstar, cfg, rank, world, device, "after"
