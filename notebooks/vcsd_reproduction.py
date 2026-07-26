@@ -174,27 +174,22 @@ def _(mo):
 
 @app.cell
 def _(mo):
-    mo.md(
-        r"""
-        ## Scope and provenance
-
-        - **Model:** public `Qwen/Qwen3-VL-2B-Instruct`
-        - **Training:** 48 fixed public ViRL39K examples; batch one; one rollout; 12 or 36 updates
-        - **Evaluation:** 64 fixed MMStar and 64 fixed MathVista items
-        - **Compute:** Kubernetes; NVIDIA RTX PRO 6000 Blackwell Server Edition; 16 GPUs peak; 50m10s (0.84 h) experiment-campaign wall time
-        - **Largest substitutions:** no official VCSD code, 32-token evaluation cap, strict local answer extraction, and two small benchmarks instead of seven full benchmarks
-
-        The paper’s much higher full-benchmark scores are not directly comparable
-        to these subset numbers. A full reproduction still needs the complete
-        ViRL39K schedule, official prompts and scorers, eight rollouts per prompt,
-        saved checkpoints, and all seven evaluations.
-
-        Read the
-        [full illustrated report](https://github.com/alphaXiv/macil-sd-75f90e4d/blob/main/reports/vcsd-reproduction/report.md)
-        or inspect the
-        [published result data](https://github.com/alphaXiv/macil-sd-75f90e4d/tree/main/reports/vcsd-reproduction/data).
-        """
+    scope_markdown = "\n".join(
+        [
+            "## Scope and provenance",
+            "",
+            "- **Model:** public `Qwen/Qwen3-VL-2B-Instruct`",
+            "- **Training:** 48 fixed public ViRL39K examples; batch one; one rollout; 12 or 36 updates",
+            "- **Evaluation:** 64 fixed MMStar and 64 fixed MathVista items",
+            "- **Compute:** Kubernetes; NVIDIA RTX PRO 6000 Blackwell Server Edition; 16 GPUs peak; 50m10s (0.84 h) experiment-campaign wall time",
+            "- **Largest substitutions:** no official VCSD code, 32-token evaluation cap, strict local answer extraction, and two small benchmarks instead of seven full benchmarks",
+            "",
+            "The paper’s much higher full-benchmark scores are not directly comparable to these subset numbers. A full reproduction still needs the complete ViRL39K schedule, official prompts and scorers, eight rollouts per prompt, saved checkpoints, and all seven evaluations.",
+            "",
+            "Read the [full illustrated report](https://github.com/alphaXiv/macil-sd-75f90e4d/blob/main/reports/vcsd-reproduction/report.md) or inspect the [published result data](https://github.com/alphaXiv/macil-sd-75f90e4d/tree/main/reports/vcsd-reproduction/data).",
+        ]
     )
+    mo.md(scope_markdown)
     return
 
 
