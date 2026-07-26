@@ -1,6 +1,6 @@
 {
   "condition": "vcsd",
-  "seed": 260721556,
+  "seed": 260721558,
   "model_id": "Qwen/Qwen3-VL-2B-Instruct",
   "train_examples": 48,
   "eval_examples_per_benchmark": 64,
