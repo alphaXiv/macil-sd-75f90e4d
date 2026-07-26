@@ -70,7 +70,7 @@ def _(mo):
 def _(mo):
     horizon = mo.ui.dropdown(
         options={"12 updates (5 seeds)": 12, "36 updates (4 seeds)": 36},
-        value=36,
+        value="36 updates (4 seeds)",
         label="Training horizon",
     )
     horizon
