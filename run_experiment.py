@@ -410,6 +410,7 @@ def main():
     parser.add_argument("--config", required=True)
     args = parser.parse_args()
     cfg = json.loads(Path(args.config).read_text())
+    cfg["data_seed"] = cfg.get("data_seed", 260721556)
     start = time.time()
     rank, world, device = setup_dist(cfg["seed"])
     rank0_print({
@@ -424,7 +425,7 @@ def main():
         "substitutions": [
             "48 fixed ViRL39K examples instead of the full 38,870",
             "12 updates instead of 90",
-            "batch 4 with one rollout per prompt instead of batch 32 with eight rollouts",
+            "batch 1 with one rollout per prompt instead of batch 32 with eight rollouts",
             "64 fixed examples each from MMStar and MathVista instead of seven full benchmarks",
             "maximum 24 rollout tokens and 32 evaluation tokens",
         ],
@@ -445,12 +446,13 @@ def main():
     # Large pickled image objects are deliberately not sent through NCCL.
     # Every rank resolves the same public files through the pod-local HF cache
     # and applies the same deterministic selection.
-    train_rows = load_virl_subset(cfg["train_examples"], cfg["seed"])
+    data_seed = cfg["data_seed"]
+    train_rows = load_virl_subset(cfg["train_examples"], data_seed)
     mmstar = fixed_eval_rows(
-        "MMStar", cfg["eval_examples_per_benchmark"], cfg["seed"]
+        "MMStar", cfg["eval_examples_per_benchmark"], data_seed
     )
     mathvista = fixed_eval_rows(
-        "MathVista", cfg["eval_examples_per_benchmark"], cfg["seed"]
+        "MathVista", cfg["eval_examples_per_benchmark"], data_seed
     )
     if dist.is_initialized():
         dist.barrier()
