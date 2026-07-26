@@ -368,9 +368,12 @@ def train(model, teacher, processor, rows, cfg, rank, world, device):
             logp_student = torch.log_softmax(
                 student_logits.float() / cfg["temperature_kd"], -1
             )
-            per_token = torch.sum(
-                target * (log_target - logp_student), dim=-1
+            kl_terms = torch.where(
+                target > 0,
+                target * (log_target - logp_student),
+                torch.zeros_like(target),
             )
+            per_token = torch.sum(kl_terms, dim=-1)
             loss = cfg["temperature_kd"] ** 2 * per_token.mean()
         loss.backward()
         grad_norm = torch.nn.utils.clip_grad_norm_(module.parameters(), 1.0)
