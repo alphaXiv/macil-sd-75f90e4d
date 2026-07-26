@@ -1,0 +1,21 @@
+{
+  "condition": "base",
+  "seed": 260721556,
+  "model_id": "Qwen/Qwen3-VL-2B-Instruct",
+  "train_examples": 48,
+  "eval_examples_per_benchmark": 64,
+  "train_steps": 12,
+  "max_new_tokens_train": 24,
+  "max_new_tokens_eval": 32,
+  "learning_rate": 2e-6,
+  "warmup_steps": 2,
+  "temperature_kd": 2.0,
+  "sampling_temperature": 0.7,
+  "top_p": 0.8,
+  "top_k": 20,
+  "ema_update_rate": 0.05,
+  "alpha": 0.0,
+  "beta": 0.1,
+  "max_pixels": 200704,
+  "min_pixels": 100352
+}

@@ -1,64 +1,34 @@
-# MACIL_SD  
+# Visual Contrastive Self-Distillation — bounded reproduction
 
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/modality-aware-contrastive-instance-learning/anomaly-detection-in-surveillance-videos-on-2)](https://paperswithcode.com/sota/anomaly-detection-in-surveillance-videos-on-2?p=modality-aware-contrastive-instance-learning)
+This public repository contains an independent, claim-oriented reproduction of
+[Visual Contrastive Self-Distillation](https://arxiv.org/abs/2607.21556) on
+Qwen3-VL-2B-Instruct. The live result, report, figures, and tutorial notebook
+will be published here after the fresh Kubernetes runs finish.
 
-**[ACM MM 2022] Modality-Aware Contrastive Instance Learning with Self-Distillation for Weakly-Supervised Audio-Visual Violence Detection**  
+The experiment uses a fixed public ViRL39K subset and fixed public MMStar and
+MathVista subsets. It compares the unchanged checkpoint, compute-matched
+answer-hint OPSD, VCSD with relative plausible support, and the paper's
+unrestricted-support ablation. All conditions share the same run command.
 
-Jiashuo Yu*, Jinyu Liu*, Ying Cheng, Rui Feng, Yuejie Zhang (* equal contribution)  
+## Reproduction command
 
-[Paper](https://arxiv.org/abs/2207.05500)  
+```bash
+bash run.sh
+```
 
-## Overview
+The condition is committed in `experiment.json`; the command never changes
+between experiment-tree nodes.
 
-<p align="center">
-    <img src=overview.png width="800" height="300"/>
-</p>
+## Repository layout
 
-## Results  
-
-Our model achieves state-of-the-art results on the XD-Violence dataset while maintaining low parameter amounts.
-
-| Method | Modality |AP (%) | Params |
-| ----------| :------: | :----:| :----: |
-| Ours (light)| Audio & Visual | 82.17 | 0.347M|
-| Ours (full)| Audio & Visual | 83.40 | 0.678M|
-
-## XD-Violence Dataset & Features  
-
-The audio and visual features of the XD-Violence dataset can be downloaded at this [link](https://roc-ng.github.io/XD-Violence/). Note that in this paper, only the **RGB** and **VGGish** features are required. You can download the **RGB.zip**, **RGBTest.zip**, and **vggish-features.zip** and unzip them into the *data/* folder.  
-
-## Requirements  
-
-    python==3.7.11  
-    torch==1.6.0  
-    cuda==10.1  
-    numpy==1.17.4
-  
-Note that the reported results are obtained by training on a single Tesla V100 GPU. We observe that different GPU types and torch/cuda versions can lead to slightly different results.  
-
-## Training
-
-`python main.py --model_name=macil_sd`  
-
-## Testing
-
-`python infer.py  --model_dir=macil_sd.pkl`  
-
-## Citation  
-
-If you find our work interesting and useful, please consider citing it.  
-
-    @article{yu2022macil,
-      title={Modality-Aware Contrastive Instance Learning with Self-Distillation for Weakly-Supervised Audio-Visual Violence Detection},
-      author={Jiashuo Yu, Jinyu Liu, Ying Cheng, Rui Feng, Yuejie Zhang},
-      journal={arXiv preprint arXiv:2207.05500},
-      year={2022}
-    }  
+- `run_experiment.py`: Qwen3-VL training, evaluation, and diagnostics
+- `experiment.json`: experiment condition and bounded protocol
+- `.orx/k8s.yaml`: four-GPU Kubernetes job
+- `reports/vcsd-reproduction/`: final reader-facing report and figures
+- `notebooks/vcsd_reproduction.py`: self-contained marimo walkthrough
 
 ## License
 
-This project is released under the MIT License.
-
-## Acknowledgements  
-
-The codes are based on [XDVioDet](https://github.com/Roc-Ng/XDVioDet) and [RTFM](https://github.com/tianyu0207/RTFM). We sincerely thank them for their efforts. If you have further questions, please contact us at jsyu19@fudan.edu.cn and jinyuliu20@fudan.edu.cn.  
+Reproduction code is released under the MIT License. Model and dataset assets
+are fetched at run time from their public upstream repositories and are not
+redistributed here.

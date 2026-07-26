@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: vcsd-{{ORX_RUN}}
+spec:
+  backoffLimit: 0
+  activeDeadlineSeconds: 42000
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: run
+          image: pytorch/pytorch:2.7.1-cuda12.8-cudnn9-runtime
+          command: ["bash", "-c", "$ORX_SCRIPT"]
+          resources:
+            requests:
+              nvidia.com/gpu: "4"
+              cpu: "32"
+              memory: "180Gi"
+            limits:
+              nvidia.com/gpu: "4"
+              cpu: "32"
+              memory: "180Gi"
+          env:
+            - name: HF_HOME
+              value: /workspace/hf-cache
+            - name: TORCH_NCCL_ASYNC_ERROR_HANDLING
+              value: "1"
+          volumeMounts:
+            - name: dshm
+              mountPath: /dev/shm
+            - name: cache
+              mountPath: /workspace
+      volumes:
+        - name: dshm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 64Gi
+        - name: cache
+          emptyDir:
+            sizeLimit: 80Gi

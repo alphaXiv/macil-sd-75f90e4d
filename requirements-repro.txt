@@ -1,0 +1,8 @@
+transformers>=4.57.0,<6
+datasets>=3.6,<5
+huggingface_hub>=0.34,<2
+accelerate>=1.8,<2
+pandas>=2.2,<3
+pyarrow>=18,<23
+pillow>=10,<13
+numpy>=1.26,<3
