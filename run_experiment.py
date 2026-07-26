@@ -425,23 +425,18 @@ def main():
     model.config.use_cache = False
     model.gradient_checkpointing_enable()
     model = DDP(model, device_ids=[device.index], find_unused_parameters=True)
+    # Every rank resolves exactly the same deterministic public IDs from the
+    # pod-wide cache. Do not serialize image objects through an NCCL collective:
+    # large broadcast_object_list payloads cause illegal accesses on this stack.
     dist.barrier()
-    if rank == 0:
-        train_rows = load_virl_subset(
-            cfg["train_examples"], cfg["seed"]
-        )
-        mmstar = fixed_eval_rows(
-            "MMStar", cfg["eval_examples_per_benchmark"], cfg["seed"]
-        )
-        mathvista = fixed_eval_rows(
-            "MathVista", cfg["eval_examples_per_benchmark"], cfg["seed"]
-        )
-        payload = [train_rows, mmstar, mathvista]
-    else:
-        payload = None
-    objects = [payload]
-    dist.broadcast_object_list(objects, src=0)
-    train_rows, mmstar, mathvista = objects[0]
+    train_rows = load_virl_subset(cfg["train_examples"], cfg["seed"])
+    mmstar = fixed_eval_rows(
+        "MMStar", cfg["eval_examples_per_benchmark"], cfg["seed"]
+    )
+    mathvista = fixed_eval_rows(
+        "MathVista", cfg["eval_examples_per_benchmark"], cfg["seed"]
+    )
+    dist.barrier()
     rank0_print({
         "event": "data",
         "train_ids_sha_material": [x["id"] for x in train_rows],
